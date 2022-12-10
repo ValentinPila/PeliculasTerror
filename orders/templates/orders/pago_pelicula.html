@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Pagina de pago</h1>
+
+        <p>Esta es la pelicula seleccionada: {{Pelicula.Nombre}}</p>
+    
+    <p>Paga: ${{Pelicula.Precio}}</p>
+
+    <form action="{% url 'charge' %}" method="post"> {% csrf_token %}
+        <input type="hidden" value="{{Pelicula.Precio}}" id = Precio name = "Precio" >
+        <input type="hidden" value="{{Pelicula.Nombre}}" id = Nombre name = "Nombre" >
+
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ stripe_key }}"
+            data-description="Pagara la pelicula: {{Pelicula.Nombre}}"
+            data-amount= {{Pelicula.Precio}}00
+            data-locale="auto">
+        </script>
+    </form>
+{% endblock content %}
+
+<!-- 
+    data-amount="10000"
+-->
